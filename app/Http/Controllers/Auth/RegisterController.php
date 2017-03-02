@@ -51,6 +51,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'role_id' => 'required|integer',//Adding role_id to validator as it is called for validation
         ]);
     }
 
@@ -66,6 +67,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role_id' => $data['role_id'],//Creates and enter role_id value into the users table
         ]);
     }
 }
