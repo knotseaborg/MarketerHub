@@ -62,10 +62,10 @@
 
                         <div class="col-md-6 col-md-offset-4">
                             <label class="radio-inline">
-                                <input type="radio" name="role_id" id="inlineRadio1" value="1"> Startup
+                                <input type="radio" name="role_id" value="1"> Startup
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="role_id" id="inlineRadio2" value="2"> Corporate
+                                <input type="radio" name="role_id" value="2"> Corporate
                             </label>
                         </div>
 
