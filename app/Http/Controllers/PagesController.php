@@ -11,13 +11,13 @@ class PagesController extends Controller
         return view('pages.welcome');
     }
 
-    //Action for routing About page
-    public function getAbout(){
-        return view('pages.about');
+    //Will shift to a seperate controller
+    public function getBlog(){
+        return view('pages.blog');
     }
 
-    public function getContact(){
-        return view('pages.contact');
+    public function getExplore(){
+        return view('pages.explore');
     }
 
     

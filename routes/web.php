@@ -12,13 +12,16 @@
 */
 //Route for Static pages
 Route::get('/', 'PagesController@getHome');
-Route::get('about', 'PagesController@getAbout');
-Route::get('contact', 'PagesController@getContact');
-
+Route::get('blog', 'PagesController@getBlog');
+Route::get('explore', 'PagesController@getExplore');
+//Route for the auth-related features
 Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-Auth::routes();
-
+//Route for Projects CRUD
+Route::resource('project', 'ProjectController', ['except' => ['index']]);
+Route::group(['prefix' => 'profile'], function(){
+	//Route for Company Profile
+	Route::get('dashboard', 'ProfileController@getDashboard');
+	//Route for Project CRUD
+	Route::get('projects', 'ProjectController@index');
+});
 Route::get('/home', 'HomeController@index');
