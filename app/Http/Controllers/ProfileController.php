@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use App\Project;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -13,6 +15,12 @@ class ProfileController extends Controller
 
     public function getDashboard(){
         return view('profiles.dashboard');
+    }
+
+    public function getProjects()
+    {
+        $projects = DB::table('projects')->orderBy('id', 'desc')->limit(5)->get();
+        return view('profiles.projects')->with('projects', $projects);
     }
 
     /**

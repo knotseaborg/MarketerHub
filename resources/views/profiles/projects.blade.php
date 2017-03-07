@@ -3,32 +3,28 @@
 @section('title', '| Projects')
 
 @section('profile_content')
+	<div class="
+			row">
+		<div class="col-md-12">
+			<a href="{{ route('project.index') }}" class="btn btn-primary btn-top-space btn-xs">View All Projects</a>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="text-center">
-				<a href="{{ route('project.create') }}" class="btn btn-primary btn-top-space">Create New Project</a>
+			<div class="top-space panel panel-default">
+				<div class="panel-heading">Popular Projects</div>
+				<div class="panel-body">
+					<div class="row left-padding-55">
+						@foreach($projects as $project)
+							<div class="col-md-5 panel panel-default left-gap-20">
+								<div class="panel-body">
+									<a href="{{ route('project.show', $project->id) }}">{{ $project->name }}</a>
+								</div>
+							</div>
+						@endforeach
+					</div>
+				</div>
 			</div>
-			<table class="table top-space">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Summary</th>
-						<th>Creation</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="panel">
-						<td><a href="#">Smart India Hackathon</a></td>
-						<td>This a govt. inititated project. This is so exciting. we can do a lot of fun stuff here. Includes over 250 glyphs in font format from the Glyphicon Halflings set. Glyphicons Halflings are normally not available for free, but their creator has made them available for Bootstrap free of cost. As a thank you, we only ask that you include a link back to Glyphicons whenever possible.</td>
-						<td>date</td>
-					</tr>
-					<tr class="panel">
-						<td><a href="#">Smart India Hackathon</a></td>
-						<td>This a govt. inititated project. This is so exciting. we can do a lot of fun stuff here. Includes over 250 glyphs in font format from the Glyphicon Halflings set. Glyphicons Halflings are normally not available for free, but their creator has made them available for Bootstrap free of cost. As a thank you, we only ask that you include a link back to Glyphicons whenever possible.</td>
-						<td>date</td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 	</div>
 @endsection

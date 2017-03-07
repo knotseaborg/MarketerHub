@@ -1,17 +1,18 @@
 @extends('main')
 
-@section('title', '| Create')
+@section('title', '| Edit')
 
 @section('content')
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 ">
 			<ol class="breadcrumb">
 			  <li><a href="{{ url('profile/projects') }}">Projects</a></li>
-			  <li class="active">New Project</li>
+			  <li><a href="{{ route('project.index') }}">All Projects</a></li>
+			  <li class="active">{{ $project->name }}</li>
 			</ol>
-			<h2>New Project</h2>
+			<h2>Edit Project</h2>
 			<hr>
-			{!! Form::open(['route' => 'project.store']) !!}
+			{!! Form::model($project, ['route' => ['project.update', $project->id], 'method' => 'PUT']) !!}
 				{{ Form::label('name', 'Name: ') }}
 				{{ Form::text('name',  null, ['class' => 'form-control']) }}
 
@@ -20,11 +21,11 @@
 
 				{{ Form::label('content', 'Content: ') }}
 				{{ Form::textarea('content',  null, ['class' => 'form-control', 'rows' => '5']) }}
-
+				
 				{{ Form::label('category_id', 'Category: ') }}
-				{{ Form::select('category_id', $categories, null, ['class' => 'form-control categories']) }}
+				{{ Form::select('category_id', $categories , null, ['class' => 'form-control category-select']) }}
 
-				{{ Form::submit('Create project', ['class' => 'btn btn-success btn-block btn-top-space']) }}							
+				{{ Form::submit('Edit project', ['class' => 'btn btn-success btn-block btn-top-space']) }}							
 			{!! Form::close() !!}
 		</div>
 	</div>
@@ -33,10 +34,10 @@
 @section('script')
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$(".categories").select2({
-			  placeholder: "Choose a Category",
-			  allowClear: true,
-			  maximumSelectionLength: 7
+			$(".category-select").select2({
+				maximumSelectionLength: 7,
+				allowClear: true,
+				placeholder: "Choose a Category"
 			});
 		});
 	</script>

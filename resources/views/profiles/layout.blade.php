@@ -5,11 +5,12 @@
 		<div class="col-md-10 panel col-md-offset-1">
 			<div class="row">
 				<div class="col-md-3">
-					<div class="company-details well">
+					<div class="company-details well text-center">
 						<img src="https://cdn.pixabay.com/photo/2015/04/17/09/36/domestic-cat-726989_960_720.jpg" id="logo-img"/>
 						<h3>Marketer Hub</h3>
 						<div class="small-grey-text">MarketerHub@gmail.com</div>
 						<p>Hi! These are the company details. Why don't you check them out?</p>
+						<p>Rating using graphics</p>
 					</div>
 				</div>
 				<div class="col-md-9">
@@ -17,7 +18,7 @@
 						<div class="col-md-12">
 							<ul class="nav nav-tabs">
 								<li role="presentation"  class="{{Request::url() == url('profile/dashboard') ? 'active' : ''}}">
-							  		<a href="#">Dashboard</a></li>
+							  		<a href="{{ url('profile/dashboard') }}">Dashboard</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('profile/projects') ? 'active' : ''}}">
 							  		<a href="{{ url('profile/projects') }}">Projects</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('profile/invitations') ? 'active' : ''}}"/>
