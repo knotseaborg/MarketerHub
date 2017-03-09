@@ -31,3 +31,9 @@ Route::get('category_type/delete/{id}', ['as' => 'category_type.delete', 'uses' 
 //Route for categories
 Route::resource('category', 'CategoryController');
 Route::get('category/delete/{id}', ['as' => 'category.delete', 'uses' => 'CategoryController@delete']);
+//Route for settings
+Route::resource('setting', 'SettingsController', ['except' => ['create', 'edit', 'update', 'show', 'destroy']]);
+Route::put('setting', ['as' => 'setting.update', 'uses' => 'SettingsController@update']);
+//Route for tags
+Route::resource('tag', 'TagController');
+//Passing settings data to all pages

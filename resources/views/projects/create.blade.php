@@ -15,14 +15,18 @@
 				{{ Form::label('name', 'Name: ') }}
 				{{ Form::text('name',  null, ['class' => 'form-control']) }}
 
+				{{ Form::label('category_id', 'Category: ') }}
+				{{ Form::select('category_id', $categories, null, ['class' => 'form-control categories']) }}
+
+				{{ Form::label('tag_id[]', 'Tags: ') }}
+				{{ Form::select('tag_id[]', $tags, null, ['class' => 'form-control tags', 'multiple' => 'multiple']) }}
+
+
 				{{ Form::label('summary', 'Summary: ') }}
 				{{ Form::textarea('summary',  null, ['class' => 'form-control', 'rows' => '5']) }}
 
 				{{ Form::label('content', 'Content: ') }}
 				{{ Form::textarea('content',  null, ['class' => 'form-control', 'rows' => '5']) }}
-
-				{{ Form::label('category_id', 'Category: ') }}
-				{{ Form::select('category_id', $categories, null, ['class' => 'form-control categories']) }}
 
 				{{ Form::submit('Create project', ['class' => 'btn btn-success btn-block btn-top-space']) }}							
 			{!! Form::close() !!}
@@ -38,6 +42,12 @@
 			  allowClear: true,
 			  maximumSelectionLength: 7
 			});
+			$(".tags").select2({
+			  placeholder: "Choose Tags",
+			  allowClear: true,
+			  maximumSelectionLength: 7
+			});
+
 		});
 	</script>
 @endsection

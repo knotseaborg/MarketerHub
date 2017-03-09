@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Project;
 use App\Category;
+use App\Tag;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -33,7 +34,12 @@ class ProjectController extends Controller
         foreach($categories as $category){
             $cat_arr[$category->id] = $category->category;
         }
-        return view('projects.create')->with('categories', $cat_arr);
+        $tags = Tag::all();
+        $tag_arr = [];
+        foreach($tags as $tag){
+            $tag_arr[$tag->id] = $tag->tag;
+        }
+        return view('projects.create')->with('categories', $cat_arr)->with('tags', $tag_arr);
     }
 
     /**
@@ -51,6 +57,7 @@ class ProjectController extends Controller
             'category_id' => 'required|integer',
         ]);
 
+
         $project = new Project();
         $project->name = $request->input('name');
         $project->summary = $request->input('summary');
@@ -59,6 +66,8 @@ class ProjectController extends Controller
         $project->user_id = Auth::id();
 
         $project->save();
+
+        $project->tags()->sync($request->input('tag_id'), false);//To assiciate project with tags. False means don't replace.
 
         Session::flash('success', 'Your project has been saved');
 
@@ -85,14 +94,19 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
+        $project = Project::find($id);
         $categories = Category::all();
         $cat_arr = [];
         foreach($categories as $category){
             $cat_arr[$category->id] = $category->category;
         }
-
-        $project = Project::find($id);
-        return view('projects.edit')->with('project', $project)->with('categories', $cat_arr);
+        $tags = Tag::all();
+        $tag_arr = [];
+        foreach ($tags as $tag) {
+            $tag_arr[$tag->id] = $tag->tag;     
+        }
+        $tagsForThisProject = $project->tags->pluck('id');
+        return view('projects.edit')->with('project', $project)->with('categories', $cat_arr)->with('tags', $tag_arr)->with('tagsForThisProject', json_encode($tagsForThisProject));
     }
 
     /**
@@ -120,6 +134,8 @@ class ProjectController extends Controller
         $project->category_id = $request->input('category_id');
 
         $project->save();
+
+        $project->tags()->sync($request->input('tag_id'), true);
 
         Session::flash('success', 'Your Project has been Updated');
 

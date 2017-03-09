@@ -7,9 +7,9 @@
 				<div class="col-md-3">
 					<div class="company-details well text-center">
 						<img src="https://cdn.pixabay.com/photo/2015/04/17/09/36/domestic-cat-726989_960_720.jpg" id="logo-img"/>
-						<h3>Marketer Hub</h3>
+						<h3>{{Auth::user()->name}}</h3>
 						<div class="small-grey-text">MarketerHub@gmail.com</div>
-						<p>Hi! These are the company details. Why don't you check them out?</p>
+						<p>@if(isset($settings)){{ $settings->bio }}@endif</p>
 						<p>Rating using graphics</p>
 					</div>
 				</div>
@@ -27,8 +27,8 @@
 							  		<a href="#">Following</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('profile/followers') ? 'active' : ''}}">
 							  		<a href="#">Followers</a></li>
-							  	<li role="presentation" class="{{Request::url() == url('profile/settings') ? 'active' : ''}}">
-							  		<a href="#">Settings</a></li>
+							  	<li role="presentation" class="{{Request::url() == url('setting') ? 'active' : ''}}">
+							  		<a href="{{url('setting')}}">Settings</a></li>
 							</ul>
 						</div>
 					</div>

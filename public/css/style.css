@@ -6,6 +6,9 @@ body{
 .top-space{
 	margin-top: 20px;
 }
+.top-space-10{
+	margin-top:10px;
+}
 .btn-top-space{
     margin-top: 20px;
 }

@@ -23,7 +23,11 @@
 					<div>
 						<h4 class="text-center">{{ $project->category->category}}</h4>
 						<div class="panel panel-default"><div class="panel-body">{{$project->summary}}</div></div>
-						<p>Tags: To be added</p>
+						<p>Tags: 
+							@foreach($project->tags  as $tag)
+								<label class="label label-default">{{ $tag->tag }}</label>
+							@endforeach
+						</p>
 						<p>Created at: {{ date('j M Y, g:i a ',strtotime($project->created_at)) }}</p>
 						<p>Updated at: {{ date('j M Y, g:i a ',strtotime($project->updated_at)) }}</p>
 					</div>
@@ -40,11 +44,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirm-modal">
-  Launch demo modal
-</button>
-
 <!-- Modal -->
 <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
