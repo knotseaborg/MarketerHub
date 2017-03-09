@@ -17,12 +17,6 @@ class ProfileController extends Controller
         return view('profiles.dashboard');
     }
 
-    public function getProjects()
-    {
-        $projects = DB::table('projects')->orderBy('id', 'desc')->limit(5)->get();
-        return view('profiles.projects')->with('projects', $projects);
-    }
-
     /**
      * Display a listing of the resource.
      *

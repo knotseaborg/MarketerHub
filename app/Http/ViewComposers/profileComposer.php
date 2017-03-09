@@ -14,7 +14,7 @@ class ProfileComposer
      *
      * @var UserRepository
      */
-    protected $settings;
+    protected $details;
 
     /**
      * Create a new profile composer.
@@ -25,7 +25,7 @@ class ProfileComposer
     public function __construct()
     {
         // Dependencies automatically resolved by service container...
-        $this->settings = Setting::find(Auth::id());
+        $this->details = Setting::find(Auth::id());
     }
 
     /**
@@ -37,6 +37,6 @@ class ProfileComposer
     public function compose(View $view)
     {
         //$setting = Setting::find(Auth::id());
-        $view->with('settings', $this->settings);
+        $view->with('details', $this->details);
     }
 }

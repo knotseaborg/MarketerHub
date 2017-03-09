@@ -16,7 +16,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         // Using class based composers...
         View::composer(
-            ['profiles.dashboard', 'profiles.projects', 'settings.index', 'profiles.following', 'profiles.followers', 'invitations.index'], 'App\Http\ViewComposers\ProfileComposer'
+            ['profiles.dashboard', 'projects.starred', 'settings.index', 'following.index', 'followers.index', 'invitations.index'], 'App\Http\ViewComposers\ProfileComposer'
         );
 
         // Using Closure based composers...

@@ -6,7 +6,6 @@
 	<div class="row">
 		<div class="col-md-6 col-md-offset-3 ">
 			<ol class="breadcrumb">
-			  <li><a href="{{ url('profile/projects') }}">Projects</a></li>
 			  <li><a href="{{ route('project.index') }}">All Projects</a></li>
 			  <li class="active">{{ $project->name }}</li>
 			</ol>

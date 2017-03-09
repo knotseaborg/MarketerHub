@@ -10,22 +10,31 @@
 					<h4>Settings</h4>	
 				</div>
 				<div class="panel-body">
-					@if(isset($settings))
-					{!! Form::model($settings, ['route' => ['setting.update'], 'method' => 'put']) !!}
+					@if(isset($details))
+					{!! Form::model($details, ['route' => ['setting.update'], 'method' => 'put']) !!}
 					@else
 					{!! Form::open(['route' => ['setting.store'], 'method' => 'post']) !!}
 					@endif
-						{{ Form::label('bio', 'Bio: ') }}
-						{{ Form::textarea('bio', null, ['class' => 'form-control']) }}
+						{{ Form::label('bio', 'A Brief description of who you are and what yo do: ') }}
+						{{ Form::textarea('bio', null, ['class' => 'form-control', 'rows' => '5']) }}
 						
-						{{ Form::label('url', 'Url: ') }}
+						{{ Form::label('url', 'Url of your official site: ') }}
 						{{ Form::text('url', null, ['class' => 'form-control']) }}		
 						
-						{{ Form::label('location', 'Location: ') }}
-						{{ Form::select('location', $locations ,null, ['class' => 'form-control locations']) }}	
+						{{ Form::label('location_id', 'Location of your Head Quaters: ') }}
+						{{ Form::select('location_id', $locations ,null, ['class' => 'form-control locations']) }}
 
-						{{ Form::label('institution', 'Institution: ') }}
-						{{ Form::text('institution', null, ['class' => 'form-control']) }}	
+						{{ Form::label('sector_id', 'Business Sector: ') }}
+						{{ Form::select('sector_id', $sectors, null, ['class' => 'form-control sectors']) }}
+
+						{{ Form::label('service_description', 'Description of Services/Products provided: ') }}
+						{{ Form::textarea('service_description', null, ['class' => 'form-control provides', 'rows' => '5']) }}	
+
+						{{ Form::label('tag_id[]', 'Service/Product related tags: ') }}
+						{{ Form::select('tag_id[]', $tags, null, ['class' => 'form-control tags', 'multiple' => 'multiple']) }}		
+
+						{{ Form::label('interest_id[]', 'Interests: ') }}
+						{{ Form::select('interest_id[]', $tags, null, ['class' => 'form-control interests', 'multiple' => 'multiple']) }}				
 
 						{{Form::submit('Save Changes', ['class' => 'btn btn-success btn-top-space'])}}
 					{!! Form::close() !!}
@@ -39,6 +48,9 @@
 	<script>
 		$(document).ready(function(){
 			$(".locations").select2();
+			$(".sectors").select2();
+			$(".interests").select2();
+			$(".tags").select2();
 		});
 	</script>
 @endsection

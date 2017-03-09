@@ -9,4 +9,8 @@ class Tag extends Model
     public function projects(){
     	return $this->belongsToMany('App\Project');
     }
+
+    public function users(){
+        return $this->belongsToMany('App\User')->withPivot('type')->withTimestamps();
+    }
 }

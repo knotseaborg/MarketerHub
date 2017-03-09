@@ -18,9 +18,10 @@ class CreateSettingsTable extends Migration
             $table->text('bio');
             $table->string('url');
             $table->integer('location');
-            $table->string('institution');
+            $table->integer('sector');
+            $table->text('service_description');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

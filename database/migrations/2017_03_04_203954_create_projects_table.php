@@ -20,7 +20,7 @@ class CreateProjectsTable extends Migration
             $table->text('content');
             $table->integer('category_id')->unsigned();
             //$table->text('slug');
-            //add tags & slugs 
+            //$table->integer('views')->unsigned();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

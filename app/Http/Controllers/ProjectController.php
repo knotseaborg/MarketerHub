@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Session;
 use App\Project;
 use App\Category;
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    
+    public function getStarred()
+    {
+        $projects = DB::table('projects')->orderBy('id', 'desc')->limit(5)->get();
+        return view('projects.starred')->with('projects', $projects);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -19,11 +19,12 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 //Route for Projects CRUD
 Route::resource('project', 'ProjectController');
+Route::get('starred-projects', ['as' => 'starred.projects', 'uses' => 'ProjectController@getStarred']);
 Route::group(['prefix' => 'profile'], function(){
 	//Route for Company Profile
 	Route::get('dashboard', ['as' => 'profile.dashboard', 'uses' => 'ProfileController@getDashboard']);
 	//Route for Project CRUD
-	Route::get('projects', ['as' => 'profile.projects', 'uses' => 'ProfileController@getProjects']);
+	//Route::get('projects', ['as' => 'profile.projects', 'uses' => 'ProfileController@getProjects']);
 });
 //Route for category Type
 Route::resource('category_type', 'CategoryTypeController');
