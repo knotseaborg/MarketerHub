@@ -21,8 +21,8 @@
 							  		<a href="{{ url('profile/dashboard') }}">Dashboard</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('starred-projects') ? 'active' : ''}}">
 							  		<a href="{{ url('starred-projects') }}">Projects</a></li>
-							  	<li role="presentation" class="{{Request::url() == url('profile/invitations') ? 'active' : ''}}"/>
-							  		<a href="#">Invitations</a></li>
+							  	<li role="presentation" class="{{Request::url() == route('invite.notify') ? 'active' : ''}}"/>
+							  		<a href="{{ route('invite.notify')}}">Invitations</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('profile/following') ? 'active' : ''}}">
 							  		<a href="#">Following</a></li>
 							  	<li role="presentation" class="{{Request::url() == url('profile/followers') ? 'active' : ''}}">

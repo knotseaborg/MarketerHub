@@ -10,7 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     public function role(){
-        return $this->belongsTo('App\Role')->withTimeStamp();
+        return $this->belongsTo('App\Role');
     }
 
     public function projects(){
@@ -23,12 +23,22 @@ class User extends Authenticatable
 
     //Custom methods to obtain desired data
     public function provides(){
-        return $this->belongsToMany('App\Tag')->wherePivot('type', 'provide');   
+        return $this->belongsToMany('App\Tag')->wherePivot('type', 'provides');   
     }
 
     public function requires(){
         return $this->belongsToMany('App\Tag')->wherePivot('type', 'requires');   
     }    
+
+    //Will have to change it
+    public function invites_sent(){
+        return $this->hasMany('App\Invite', 'sender_id');
+    }
+
+    public function invites_received(){
+        return $this->hasMany('App\Invite', 'receiver_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

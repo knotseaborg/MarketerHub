@@ -13,4 +13,8 @@ class Tag extends Model
     public function users(){
         return $this->belongsToMany('App\User')->withPivot('type')->withTimestamps();
     }
+
+    public function invites(){
+    	return $this->belongsToMany('App\Invite')->withTimestamps();
+    }
 }

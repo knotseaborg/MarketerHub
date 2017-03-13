@@ -14,8 +14,8 @@ use Session;
 class SettingsController extends Controller
 {
     public function __construct(){
-            $this->middleware('auth');
-        }
+           $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,29 +24,47 @@ class SettingsController extends Controller
     public function index()
     {
 
-        //Location and sector must be created in category_types table
-        $locations= Category_type::where('type', 'location')->first()->categories;
-        //dd($locations);
+        /*
+        * Location and sector must be created in category_types table
+        *
+        */
+        //Pulling in Categories of type location
+        $locations = Category_type::where('type', 'location')->first()->categories;
+        $loc_arr = [];
+        //Creating associative array for select
         if(isset($locations)){
             foreach($locations as $location){
                 $loc_arr[$location->id] = $location->category;
             }
         }
+        //Pulling categories of type Sector
         $sectors= Category_type::where('type', 'sector')->first()->categories;
+        $sector_arr = [];
+        //Creating associative array for select
         if(isset($sectors)){
             foreach($sectors as $sector){
                 $sector_arr[$sector->id] = $sector->category;
             }  
         }
-        //Tags should also be created
+        //Tags should be created beforehand
         $tags= Tag::all();
         $tag_arr = [];
         foreach($tags as $tag){
             $tag_arr[$tag->id] = $tag->tag;
         }
+        //Pulling details of the user
         $user_id = Auth::id();
         $details = Setting::find($user_id);
-        return view('settings.index')->with('details', $details)->with('locations', $loc_arr)->with('sectors', $sector_arr)->with('tags', $tag_arr);
+        
+        $user = User::find(Auth::id());
+
+        //Pulling interests and tags of user
+        $chosen_tags = $user->provides->pluck('id');
+        $chosen_interests = $user->requires->pluck('id');
+
+        $data = ['details' => $details, 'loc_arr' => $loc_arr, 'sector_arr' => $sector_arr, 'tag_arr' =>$tag_arr, 'chosen_tags' => $chosen_tags, 'chosen_interests' => $chosen_interests];
+
+        return view('settings.index')->with('data', $data);
     }
 
     /**
@@ -90,17 +108,17 @@ class SettingsController extends Controller
                 $del->pivot->delete();
             }
         }
-        foreach($request->input('tag_id') as $tag_id){
-            $arr = [$tag_id, ['type' => 'provides']];
-            $user->tags()->attach($tag_id, ['type' => 'provides']);
+        if($request->input('tag_id')->count() > 0){
+            foreach($request->input('tag_id') as $tag_id){
+                $user->tags()->attach($tag_id, ['type' => 'provides']);
+            }
         }
 
-        foreach($request->input('interest_id') as $int_id){
-            $arr = [$int_id, ['type' => 'requires']];
-            $user->tags()->attach($int_id, ['type' => 'requires']);
-            //$user->tags()->updateExistingPivot($int_id, ['type' => 'requires']);
-           
-        }     
+        if($request->input('interest_id')->count() > 0){
+            foreach($request->input('interest_id') as $int_id){
+                $user->tags()->attach($int_id, ['type' => 'requires']);
+            }
+        }
 
         Session::flash('success', 'Changes to your` Settings have been saved');
 
@@ -156,16 +174,17 @@ class SettingsController extends Controller
                 $del->pivot->delete();
             }
         }
-        foreach($request->input('tag_id') as $tag_id){
-            $arr = [$tag_id, ['type' => 'provides']];
-            $user->tags()->attach($tag_id, ['type' => 'provides']);
+
+        if($request->input('tag_id') != null){
+            foreach($request->input('tag_id') as $tag_id){
+                $user->tags()->attach($tag_id, ['type' => 'provides']);
+            }
         }
 
-        foreach($request->input('interest_id') as $int_id){
-            $arr = [$int_id, ['type' => 'requires']];
-            $user->tags()->attach($int_id, ['type' => 'requires']);
-            //$user->tags()->updateExistingPivot($int_id, ['type' => 'requires']);
-           
+        if($request->input('interest_id')!= null){
+            foreach($request->input('interest_id') as $int_id){
+                $user->tags()->attach($int_id, ['type' => 'requires']);
+            }
         }     
 
         Session::flash('success', 'Changes to your Settings have been saved');

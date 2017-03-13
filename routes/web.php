@@ -37,4 +37,22 @@ Route::resource('setting', 'SettingsController', ['except' => ['create', 'edit',
 Route::put('setting', ['as' => 'setting.update', 'uses' => 'SettingsController@update']);
 //Route for tags
 Route::resource('tag', 'TagController');
-//Passing settings data to all pages
+//Route for Invitations
+Route::group(['middleware' => 'senderInviteAccess'], function(){
+	Route::get('invite/show_sender/{id}', ['as' => 'invite.show_receiver', 'uses' => 'SenderActionController@getShowSender']);
+	Route::put('invite/remove_for_sender/{id}', ['as' => 'invite.remove_for_sender', 'uses' => 'SenderActionController@putRemove']); 
+});
+Route::group(['middleware' => 'receiverInviteAccess'], function(){
+	Route::get('invite/show_receiver/{id}', ['as' => 'invite.show_receiver', 'uses' => 'ReceiverActionController@getShowReceiver']);
+	Route::put('invite/check/{id}', ['as' => 'invite.checked', 'uses' => 'ReceiverActionController@putChecked']);
+	Route::put('invite/accept/{id}', ['as' => 'invite.accepted', 'uses' => 'ReceiverActionController@putAccepted']);
+	Route::put('invite/reject/{id}', ['as' => 'invite.rejected', 'uses' => 'ReceiverActionController@putRejected']);
+});
+Route::get('invite/denied', ['as' => 'invite.denied', 'uses' => 'InviteController@getDenied']);
+Route::get('invite/sent', ['as' => 'invite.sent', 'uses' => 'InviteController@getSent']);
+Route::get('invite/received', ['as' => 'invite.received', 'uses' => 'InviteController@getReceived']);
+Route::put('invite/remove_for_receiver/{id}', ['as' => 'invite.remove_for_receiver', 'uses' => 'ReceiverActionController@putRemove']); 
+Route::get('invite/notify', ['as' => 'invite.notify', 'uses' => 'InviteController@getNotify']); //This comes first
+Route::resource('invite', 'InviteController');//This comes last, the rest of invite/ comes before. only then it works.
+//Route for Comments for Invites
+Route::resource('comment', 'CommentsController');
