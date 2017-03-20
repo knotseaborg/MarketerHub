@@ -14,9 +14,17 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="{{ Request::url() == url('/') ? 'active' : ''}}"><a href="{{ url('/') }}">Home</a></li>
-        <li class="{{ Request::url() == url('/explore') ? 'active' : ''}}"><a href="{{ url('explore') }}">Explore</a></li>
-        <li class="{{ Request::url() == url('/blog') ? 'active' : ''}}"><a href="{{ url('blog') }}">Blog</a></li>
+        <!--<li class="{{ Request::url() == url('/') ? 'active' : ''}}"><a href="{{ url('/') }}">Home</a></li>-->
+        <li class="{{ Request::url() == route('profile.dashboard') ? 'active' : ''}}"><a href="{{ route('profile.dashboard') }}">Home</a></li>
+        <li class="{{ Request::url() == url('/explore') ? 'active' : ''}}"><a href="{{ route('explore.search') }}">Explore</a></li>
+        <li class="{{ Request::url() == route('project.index') ? 'active' : ''}}"><a href="{{ route('project.index') }}">Projects</a></li>
+         <li class="{{ Request::url() ==  route('invite.received')? 'active' : ''}}"><a href="{{ route('invite.received') }}">Invitations</a></li>
+         <li class="{{Request::url() == url('setting') ? 'active' : ''}}">
+                    <a href="{{url('setting')}}">Settings</a></li>
+        <!--
+        <li class="{{ Request::url() == url('/blog') ? 'active' : ''}}"><a href="{{ url('blog') }}">Followers</a></li>
+        <li class="{{ Request::url() == url('/blog') ? 'active' : ''}}"><a href="{{ url('blog') }}">Following</a></li>
+        -->
       </ul>
       <!-- Right Side Of Navbar -->
       <ul class="nav navbar-nav navbar-right">

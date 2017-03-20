@@ -45,7 +45,12 @@
 				allowClear: true,
 				placeholder: "Choose Company",
 			});
+			@if(isset($preset_user_id))
+
+			$(".users").val({{$preset_user_id}}).trigger("change");
+			@else
 			$(".users").val("").trigger("change");
+			@endif
 		});
 	</script>
 @endsection

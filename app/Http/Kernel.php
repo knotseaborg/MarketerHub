@@ -58,5 +58,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'senderInviteAccess' => \App\Http\Middleware\SenderInviteAccess::class,
         'receiverInviteAccess' => \App\Http\Middleware\ReceiverInviteAccess::class,
+        'ProjectAccess' => \App\Http\Middleware\ProjectAccess::class,
     ];
 }

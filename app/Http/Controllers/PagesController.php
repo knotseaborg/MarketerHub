@@ -20,5 +20,7 @@ class PagesController extends Controller
         return view('pages.explore');
     }
 
-    
+    public function getDenied(){
+        return view('denied');  
+    }    
 }

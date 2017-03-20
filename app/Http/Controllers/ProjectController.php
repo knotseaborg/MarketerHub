@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use App\Project;
 use App\Category;
+use App\Category_type;
 use App\Tag;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class ProjectController extends Controller
     
     public function getStarred()
     {
-        $projects = DB::table('projects')->orderBy('id', 'desc')->limit(5)->get();
+        $projects = Project::where('user_id', Auth::id())->orderBy('id', 'desc')->limit(5)->get();
         return view('projects.starred')->with('projects', $projects);
     }
     /**
@@ -33,6 +34,7 @@ class ProjectController extends Controller
         return view('projects.index')->with('projects', $projects);
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +42,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $category_project_id = Category_type::where('type', 'project')->first()->id;
+        if(!isset($category_project_id)){
+            dd("Make Project category type first");
+        }
+        $categories = Category::where('category_type_id', $category_project_id)->get();
         $cat_arr = [];
         foreach($categories as $category){
             $cat_arr[$category->id] = $category->category;

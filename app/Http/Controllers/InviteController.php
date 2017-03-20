@@ -66,8 +66,9 @@ class InviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $preset_user_id = $request->input('user_id');
         $users = User::all();
         $user_arr = [];
         foreach($users as $user){
@@ -78,8 +79,7 @@ class InviteController extends Controller
         foreach($tags as $tag){
             $tag_arr[$tag->id] = $tag->tag;
         }
-
-        return view('invites.create')->with('tags', $tag_arr)->with('users', $user_arr);
+        return view('invites.create')->with('tags', $tag_arr)->with('users', $user_arr)->with('preset_user_id', $preset_user_id);
     }
 
     /**

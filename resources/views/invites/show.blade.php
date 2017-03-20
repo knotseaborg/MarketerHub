@@ -5,6 +5,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-md-7 col-md-offset-1">
+			<!--Invitation Message begins-->
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -44,7 +45,9 @@
 					</div>
 				@endif
 			</div>
+			<!--Invitation Message ends-->
 		</div>
+		<!--Invitation Details begins-->
 		<div class="col-md-2 well side-panel">
 			<div class="panel panel-default"><div class="panel-body text-center"><span class="h4">{{ $invite->user_sender->name }}</span></div></div>
 			<p><strong>Sent at:</strong> <span class="small-grey-text">{{ date('j M Y, g:ia', strtotime($invite->created_at)) }}</span></p>
@@ -73,18 +76,42 @@
 				{{ Form::submit('Move to Trash', ['class' => 'btn btn-sm btn-danger btn-block btn-top-space']) }}
 			{!! Form::close() !!}
 		</div>
+		<!--Invitation Details begins-->
 	</div>
+		<!--Comments Begins-->
 	<div class="row">
 		<div class="col-md-7 col-md-offset-1">
-			<h4>Comments. 4</h4>
-			{!! Form::open(['route' => 'comment.store']) !!}
+			<h4>Comments. {{$comments->count()}}</h4>
+			@if($invite->sender_id == Auth::id())
+				{!! Form::open(['route' => ['invite.sender_comment', $invite->id], 'method'=>'post']) !!}
+			@else
+				{!! Form::open(['route' => ['invite.receiver_comment', $invite->id], 'method' => 'post']) !!}
+			@endif
 				{{ Form::textarea('comment', null, ['class' => 'form-control', 'rows' => '3', 'placeholder' => 'Comment Here']) }}
 
 				{{ Form::submit('Submit Comment', ['class' => 'btn btn-primary btn-xs top-space-10']) }}
 			{!! Form::close() !!}
-			.
+			
+			<div class="comments">
+				@foreach($comments as $comment)
+					<hr>
+					<div class="row top-space-10">
+						<div class="col-md-12">
+							<div>
+								<img src="http://www.gravatar.com/avatar/'{{md5(trim($comment->user->email)).'?d=retro' }}" class="author-img"alt="">
+								<div class="author-info">
+									<div><strong>{{$comment->user->name}}</strong></div>
+									<div class="small-grey-text">{{date('j M Y, g:ia', strtotime($comment->created_at))}}</div>
+								</div>	
+							</div>
+							<div class="comment-body">{{ $comment->comment }}</div>
+						</div>
+					</div>
+				@endforeach
+			</div>
 		</div>
 	</div>
+	<!--Comments Ends-->
 @endsection
 
 @section('script')

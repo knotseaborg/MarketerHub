@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Tag;
+use App\User;
+use App\Invite;
+use App\Comment;
+use App\Category;
+use App\Category_type;
+use Session;
 
 class ProfileController extends Controller
 {
@@ -14,7 +22,10 @@ class ProfileController extends Controller
     }
 
     public function getDashboard(){
-        return view('profiles.dashboard');
+        //Later change this to popular
+        $invites = Invite::where('receiver_id', Auth::id())->where('checked', 0)->get();
+        $projects = Project::where('user_id', Auth::id())->orderby('id', 'desc')->limit(5)->get();
+        return view('profiles.dashboard')->with('projects', $projects)->with('invites', $invites);
     }
 
     /**

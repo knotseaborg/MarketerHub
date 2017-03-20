@@ -10,7 +10,7 @@
 							<h4>Invitations Received</h4h>
 						</div>
 						<div class="col-md-4">
-							<a href="{{ route('invite.index') }}" class="btn btn-primary btn-xs pull-right top-space-10">Manage Invitations</a>
+							<a href="{{ route('invite.received') }}" class="btn btn-primary btn-xs pull-right top-space-10">Manage Invitations</a>
 						</div>
 					</div>
 				</div>

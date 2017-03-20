@@ -18,10 +18,10 @@ class CreateCommentsTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->text('comment');
-            $table->tinyInteger('comment_type_id');
+            $table->Integer('category_id')->unsigned();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('post_id')->references('id')->on('invites')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

@@ -16,4 +16,10 @@ class Category extends Model
     public function projects(){
     	return $this->belongsTo('App\Project');
     }
+
+    public function comments(){
+    	return $this->hasMany('App\Comment', 'category_id');
+    }
+
+    
 }

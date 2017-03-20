@@ -16,12 +16,14 @@ label{
     margin-top: 20px;
 }
 #logo-img{
-	width:100px;
-	height:100px;
-	border-radius: 50%;
+	width:200px;
+	border-radius: 5px;
 }
-.company-details{
-	font-family: "Century Gothic";
+.company-details {
+	padding:20px;
+}
+.company-details .panel{
+	padding: 5px;
 }
 .small-grey-text{
 	font-size:12px;
@@ -34,4 +36,27 @@ label{
 
 .left-padding-55{
 	padding-left:55px;
+}
+.comments{
+	margin-top: 20px;
+}
+.author-info{
+	float:left;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+}
+.author-img{
+	float:left;
+	border-radius: 50%;
+	width: 50px;
+	height:50px;
+}
+.comment-body{
+	clear:both;
+	margin-left:60px;
+	font-family: 
+}
+.right-space{
+	padding-right:10px;
 }

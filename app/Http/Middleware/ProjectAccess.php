@@ -4,9 +4,9 @@ namespace App\Http\Middleware;
 
 use Illuminate\Support\Facades\Auth;
 use Closure;
-use App\Invite;
+use App\Project;
 
-class ReceiverInviteAccess
+class ProjectAccess
 {
     /**
      * Handle an incoming request.
@@ -17,8 +17,8 @@ class ReceiverInviteAccess
      */
     public function handle($request, Closure $next)
     {
-        $invite = Invite::find($request->id);
-        if($invite->receiver_id != Auth::id()){
+        $project = Project::find($request->id);
+        if($project->user_id != Auth::id()){
             return redirect()->route('denied');
         }
         return $next($request);

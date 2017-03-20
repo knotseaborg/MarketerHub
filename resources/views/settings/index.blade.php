@@ -1,20 +1,23 @@
-@extends('profiles.layout')
+@extends('main')
 
 @section('title', '| Settings')
 
-@section('profile_content')
+@section('content')
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8 col-md-offset-2">
 			<div class="panel panel-default top-space">
 				<div class="panel-heading">
 					<h4>Settings</h4>	
 				</div>
 				<div class="panel-body">
 					@if(isset($data['details']))
-					{!! Form::model($data['details'], ['route' => ['setting.update'], 'method' => 'put']) !!}
+					{!! Form::model($data['details'], ['route' => ['setting.update'], 'method' => 'put', 'files' => true]) !!}
 					@else
-					{!! Form::open(['route' => ['setting.store'], 'method' => 'post']) !!}
+					{!! Form::open(['route' => ['setting.store'], 'method' => 'post', 'files' => true]) !!}
 					@endif
+						{{ Form::label('image', 'Upload Logo: ')}}
+						{{ Form::file('image') }}
+
 						{{ Form::label('bio', 'A Brief description of who you are and what yo do: ') }}
 						{{ Form::textarea('bio', null, ['class' => 'form-control', 'rows' => '5']) }}
 						
@@ -48,9 +51,11 @@
 	<script>
 		$(document).ready(function(){
 			$(".locations").select2();
-			$(".locations").val({{ json_encode($data['details']->location) }}).trigger("change");
 			$(".sectors").select2();
+			@if(isset($data['details']))
+			$(".locations").val({{ json_encode($data['details']->location) }}).trigger("change");
 			$(".sectors").val({{ json_encode($data['details']->sector) }}).trigger("change");
+			@endif
 			$(".interests").select2();
 			$(".tags").select2();
 			$(".tags").val({{ json_encode($data['chosen_tags']) }}).trigger("change");

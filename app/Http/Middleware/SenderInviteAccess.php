@@ -19,7 +19,7 @@ class SenderInviteAccess
     {   
         $invite = Invite::find($request->id);
         if($invite->sender_id != Auth::id()){
-            return redirect()->route('invite.denied');
+            return redirect()->route('denied');
         }
         return $next($request);
     }

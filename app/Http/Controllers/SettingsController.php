@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use App\Setting;
 use App\Category_type;
 use App\Category;
@@ -88,11 +90,21 @@ class SettingsController extends Controller
         $setting = new Setting();
 
         $this->validate($request, [
-            'bio' => 'min:50|max:200',
+            'bio' => 'min:20|max:200',
             'url' => 'url|max:100',
-            'location' => 'max:100',
-            'institution' => 'max:100',
+            'location' => 'int',
+            'image' => 'sometimes|image',
         ]);
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension(); //Intervention library function
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(800,400)->save($location); //Saves image 
+
+            $setting->image = $filename; //Database has image name
+
+        }
 
         $setting->user_id = Auth::id();
         $setting->bio = $request->input('bio');
@@ -108,13 +120,14 @@ class SettingsController extends Controller
                 $del->pivot->delete();
             }
         }
-        if($request->input('tag_id')->count() > 0){
+        dd();
+        if($request->input('tag_id') != null){
             foreach($request->input('tag_id') as $tag_id){
                 $user->tags()->attach($tag_id, ['type' => 'provides']);
             }
         }
 
-        if($request->input('interest_id')->count() > 0){
+        if($request->input('interest_id') != null){
             foreach($request->input('interest_id') as $int_id){
                 $user->tags()->attach($int_id, ['type' => 'requires']);
             }
@@ -158,15 +171,21 @@ class SettingsController extends Controller
     {
         $setting = Setting::find(Auth::id());
 
+        $this->validate($request, [
+            'bio' => 'min:20|max:200',
+            'url' => 'url|max:100',
+            'location_id' => 'int',
+            'sector_id' => 'int',
+            'image' => 'sometimes|image',
+        ]);
+
         $setting->user_id = Auth::id();
         $setting->bio = $request->input('bio');
         $setting->url = $request->input('url');
         $setting->sector = $request->input('sector_id');
         $setting->service_description = $request->input('service_description');
         $setting->location = $request->input('location_id');
-        $setting->save();
-
-
+        
 
         $user = User::find(Auth::id());
         if($user->tags->count()>0){
@@ -186,6 +205,21 @@ class SettingsController extends Controller
                 $user->tags()->attach($int_id, ['type' => 'requires']);
             }
         }     
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension(); //Intervention library function
+            $location = public_path('images/'.$filename);
+            Image::make($image)->resize(800,400)->save($location); //Saves image 
+            //Grab old file name
+            $oldfilename = $setting->image;
+            //Put the new file name           
+            $setting->image = $filename;
+            //Delete old file
+            Storage::delete($oldfilename);//To use Storage, make changes in confid/filesystems
+        }
+
+        $setting->save();
 
         Session::flash('success', 'Changes to your Settings have been saved');
 

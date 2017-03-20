@@ -19,6 +19,6 @@ class Invite extends Model
     }
 
     public function comments(){
-    	return $this->hasMany('Comment_for_invite');
+    	return $this->hasMany('App\Comment','post_id');
     }
 }

@@ -39,6 +39,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Invite', 'receiver_id');
     }
 
+    public function comments(){
+        return $this->hasMany('App\Comment', 'user_id');
+    }
+
+    public function setting(){
+        return $this->hasOne('App\Setting', 'user_id');
+    }
     /**
      * The attributes that are mass assignable.
      *

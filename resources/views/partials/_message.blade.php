@@ -1,6 +1,6 @@
 @if(session('success'))
     <div class="row">
-        <div class="col-md-12 text-center alert-success">
+        <div class="col-md-12 text-center alert-success alert-dismissible">
           <h5>{{ session('success') }}</h5>
         </div>
     </div>
